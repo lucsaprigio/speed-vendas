@@ -1,5 +1,4 @@
-import { Alert, KeyboardAvoidingView, ScrollView, Text, View, Modal, TouchableOpacity } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Alert, KeyboardAvoidingView, Text, View, Modal, TouchableOpacity } from "react-native";
 import { Header } from "../components/header";
 import { Input } from "../components/input";
 import { Button } from "../components/button";
@@ -13,8 +12,7 @@ import { api } from "../api/api";
 import { Loading } from "../components/loading";
 import { Feather } from "@expo/vector-icons";
 import colors from "tailwindcss/colors";
-import { useVehiclesDatabase } from "../databases/vehicles/useVehiclesDatabase";
-import { useProvidersDatabase } from "../databases/provider-db/useProvidersDatabase";
+import { useClientDatabase } from "../databases/clients/useClientDatabase";
 
 export default function InitialConfig() {
     const router = useRouter();
@@ -32,8 +30,7 @@ export default function InitialConfig() {
 
     const userDatabase = useUsersDatabase();
     const deviceDatabase = useDeviceDatabase();
-    const vehicleDatabase = useVehiclesDatabase();
-    const providerDatabase = useProvidersDatabase();
+    const clientDatabase = useClientDatabase();
 
     const deviceId = `${Device.osInternalBuildId.replace(/[-.,_]/g, "")}${Device.totalMemory}${Device.platformApiLevel}`;
 
@@ -133,38 +130,24 @@ export default function InitialConfig() {
                             }
                         }
 
-                        for (let i = 0; fetchResponse.data.vehicles.length > i; i++) {
-                            let vehicle = await vehicleDatabase.findById(fetchResponse.data.vehicles[i].id);
+                        for (let i = 0; fetchResponse.data.clients.length > i; i++) {
+                            let client = await clientDatabase.findById(fetchResponse.data.clients[i].id);
 
-                            if (vehicle.length > 0) {
-                                await vehicleDatabase.update({
-                                    id: Number(fetchResponse.data.vehicles[i].id),
-                                    model: fetchResponse.data.vehicles[i].model,
-                                    license_plate: fetchResponse.data.vehicles[i].license_plate
+                            if (client.length > 0) {
+                                await clientDatabase.update({
+                                    id: Number(fetchResponse.data.clients[i].id),
+                                    client_name: fetchResponse.data.clients[i].client_name,
+                                    address: fetchResponse.data.clients[i].address,
+                                    cpf_cnpj: fetchResponse.data.clients[i].cpf_cnpj,
+                                    phone: fetchResponse.data.clients[i].phone
                                 });
                             } else {
-                                await vehicleDatabase.create({
-                                    id: Number(fetchResponse.data.vehicles[i].id),
-                                    model: fetchResponse.data.vehicles[i].model,
-                                    license_plate: fetchResponse.data.vehicles[i].license_plate
-                                });
-                            }
-
-                        }
-
-                        for (let i = 0; fetchResponse.data.providers.length > i; i++) {
-                            let provider = await providerDatabase.findById(fetchResponse.data.providers[i].id);
-                            console.log(provider)
-
-                            if (provider.length > 0) {
-                                await providerDatabase.update({
-                                    id: Number(fetchResponse.data.providers[i].id),
-                                    providerName: fetchResponse.data.providers[i].providerName,
-                                });
-                            } else {
-                                await providerDatabase.create({
-                                    id: Number(fetchResponse.data.providers[i].id),
-                                    providerName: fetchResponse.data.providers[i].providerName,
+                                await clientDatabase.create({
+                                    id: Number(fetchResponse.data.clients[i].id),
+                                    client_name: fetchResponse.data.clients[i].client_name,
+                                    address: fetchResponse.data.clients[i].address,
+                                    cpf_cnpj: fetchResponse.data.clients[i].cpf_cnpj,
+                                    phone: fetchResponse.data.clients[i].phone
                                 });
                             }
 

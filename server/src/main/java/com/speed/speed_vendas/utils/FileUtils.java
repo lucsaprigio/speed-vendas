@@ -28,8 +28,7 @@ public class FileUtils {
         }
 
         JSONArray usersArray = new JSONArray();
-        JSONArray vehiclesArray = new JSONArray();
-        JSONArray providersArray = new JSONArray();
+        JSONArray clientsArray = new JSONArray();
 
         for (String line : lines) {
             String[] data = line.split("\\|");
@@ -46,36 +45,29 @@ public class FileUtils {
                 JSONObject jsonObject = new JSONObject();
 
                 jsonObject.put("id", data[2]);
-                jsonObject.put("model", data[3]);
-                jsonObject.put("license_plate", data[4]);
+                jsonObject.put("client_name", data[3]);
+                jsonObject.put("cpf_cnpj", data[4]);
+                jsonObject.put("address", data[5]);
+                jsonObject.put("phone", data[6]);
 
-                vehiclesArray.put(jsonObject);
-            } else if (data[1].equals("3")) {
-                JSONObject jsonObject = new JSONObject();
-
-                jsonObject.put("id", data[2]);
-                jsonObject.put("providerName", data[3]);
-
-                providersArray.put(jsonObject);
+                clientsArray.put(jsonObject);
             } else {
                 throw new IOException("Formato de arquivo inválido na linha: " + line);
             }
-
         }
 
         JSONObject result = new JSONObject();
         result.put("users", usersArray);
-        result.put("vehicles", vehiclesArray);
-        result.put("providers", providersArray);
+        result.put("clients", clientsArray);
 
         return result.toString(4); // 4 é a indentaão de JSON
     }
 
     public static byte[] generateArchive(String name, String content) throws IOException {
 
-        Files.createDirectories(Paths.get("C:\\recebe\\"));
+        Files.createDirectories(Paths.get("C:\\recebe\\" + name + "\\"));
 
-        String fileName = "C:\\recebe\\" + name + ".txt";
+        String fileName = "C:\\recebe\\" + name + "\\" + name + ".txt";
         File file = new File(fileName);
 
         try (FileOutputStream fos = new FileOutputStream(file)) {

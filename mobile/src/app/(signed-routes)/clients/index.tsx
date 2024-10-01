@@ -1,6 +1,6 @@
 import { CardList } from "@/src/components/card-list";
 import { SearchInput } from "@/src/components/search-input";
-import { ProviderDatabase, useProvidersDatabase } from "@/src/databases/provider-db/useProvidersDatabase";
+import { ClientDatabase, useClientDatabase } from "@/src/databases/clients/useClientDatabase";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -8,28 +8,28 @@ import { Text, View } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Providers() {
+export default function Clients() {
     const router = useRouter();
 
-    const [providers, setProviders] = useState<ProviderDatabase[]>([]);
+    const [clients, setClients] = useState<ClientDatabase[]>([]);
     const [search, setSearch] = useState('');
 
-    const providerDatabase = useProvidersDatabase();
+    const clientDatabase = useClientDatabase();
 
-    const filteredProviders = search.length > 0
-        ? providers.filter(provider => provider.providerName.toLocaleUpperCase().includes(search.toLocaleUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")))
+    const filteredClients = search.length > 0
+        ? clients.filter(client => client.client_name.toLocaleUpperCase().includes(search.toLocaleUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")))
         : [];
 
     async function handleListProviders() {
         try {
-            const response = await providerDatabase.listAll();
+            const response = await clientDatabase.list();
 
-            const providersUpperCase = response.map(provider => ({
+            const clientUpperCase = response.map(provider => ({
                 ...provider,
-                providerName: provider.providerName.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+                providerName: provider.client_name.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")
             }))
 
-            setProviders(providersUpperCase);
+            setClients(clientUpperCase);
 
         } catch (error) {
             console.log(error);
@@ -60,26 +60,26 @@ export default function Providers() {
             </View>
             <ScrollView>
                 {
-                    search !== '' && filteredProviders.length > 0 ? (
-                        filteredProviders.map((provider) => (
+                    search !== '' && filteredClients.length > 0 ? (
+                        filteredClients.map((client) => (
                             <CardList
-                                key={provider.id}
-                                id={provider.id}
-                                description={provider.providerName}
+                                key={client.id}
+                                id={client.id}
+                                description={client.client_name}
                             >
                                 <Feather name="user" size={28} />
                             </CardList>
                         ))
-                    ) : search !== '' && filteredProviders.length === 0 ? (
+                    ) : search !== '' && filteredClients.length === 0 ? (
                         <View className="flex items-center justify-center mt-20">
                             <Text className="text-gray-500 font-body text-md">Sem resultados na pesquisa</Text>
                         </View>
                     ) : (
-                        providers.slice(0, 10).map((provider) => (  // Mostra apenas os 10 primeiros
+                        clients.slice(0, 10).map((client) => (  // Mostra apenas os 10 primeiros
                             <CardList
-                                key={provider.id}
-                                id={provider.id}
-                                description={provider.providerName}
+                                key={client.id}
+                                id={client.id}
+                                description={client.client_name}
                             >
                                 <Feather name="user" size={28} />
                             </CardList>
