@@ -8,10 +8,8 @@ import { GestureHandlerRootView, ScrollView, TouchableOpacity } from "react-nati
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "tailwindcss/colors";
 
-import Hatchback from "../../../../assets/images/hatchback.png";
-import Road from "../../../../assets/images/estrada.png";
-import Services from "../../../../assets/images/servico.png";
-import Provider from "../../../../assets/images/servicos-profissionais.png";
+import Client from "../../../../assets/images/cliente-satisfeito.png";
+import Sales from "../../../../assets/images/terminal-pos.png";
 import { IconButton } from "@/src/components/menu-button";
 import { DeviceDatabase, useDeviceDatabase } from "@/src/databases/devices/useDeviceDatabase";
 import { Button } from "@/src/components/button";
@@ -142,7 +140,7 @@ export default function Home() {
     }, []));
 
     return (
-        <View>
+        <View className="flex-1">
             <Modal visible={modalLoading} animationType="fade" transparent>
                 <View className="flex-1 items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }} >
                     <ActivityIndicator color={colors.blue[700]} size={42} />
@@ -210,13 +208,13 @@ export default function Home() {
                     <Text className="text-lg font-heading p-3">Selecione uma das opções abaixo</Text>
                     <View className="flex flex-row flex-wrap items-center justify-center gap-3 mt-8 bg-gray-200">
                         <IconButton
-                            source={<Image className="w-14 h-14" resizeMode="contain" source={Road} />}
-                            title="Frotas"
+                            source={<Image className="w-14 h-14" resizeMode="contain" source={Sales} />}
+                            title="Nova Venda"
                             onPress={() => { router.push("/(signed-routes)/new-sale") }}
                         />
                         <IconButton
-                            source={<Image className="w-14 h-14" resizeMode="contain" source={Hatchback} />}
-                            title="Nova frota"
+                            source={<Image className="w-14 h-14" resizeMode="contain" source={Client} />}
+                            title="Clientes"
                             onPress={() => { router.push("/(signed-routes)/clients") }}
                         />
                     </View>
