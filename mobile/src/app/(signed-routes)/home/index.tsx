@@ -209,8 +209,8 @@ export default function Home() {
                     <View className="flex flex-row flex-wrap items-center justify-center gap-3 mt-8 bg-gray-200">
                         <IconButton
                             source={<Image className="w-14 h-14" resizeMode="contain" source={Sales} />}
-                            title="Nova Venda"
-                            onPress={() => { router.push("/(signed-routes)/new-sale") }}
+                            title="Pedidos"
+                            onPress={() => { router.push("/(signed-routes)/sales") }}
                         />
                         <IconButton
                             source={<Image className="w-14 h-14" resizeMode="contain" source={Client} />}
@@ -219,7 +219,7 @@ export default function Home() {
                         />
                     </View>
                 </View>
-            </GestureHandlerRootView >
+            </GestureHandlerRootView>
         </View>
     )
 }

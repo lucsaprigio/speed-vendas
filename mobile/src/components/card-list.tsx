@@ -1,17 +1,16 @@
-import { Feather } from "@expo/vector-icons";
 import { ReactNode } from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
-type CardProps = {
-    id: number | string;
+type CardProps = TouchableOpacityProps & {
+    id: number;
     description: string;
     type?: string;
     children: ReactNode;
 }
 
-export function CardList({ id, description, type, children }: CardProps) {
+export function CardList({ id, description, type, children, ...rest }: CardProps) {
     return (
-        <View className="flex flex-row items-center justify-start p-4 border-b-[1px] border-gray-400 space-y-3 border-md">
+        <TouchableOpacity className="flex flex-row items-center justify-start p-4 border-b-[1px] border-gray-400 space-y-3 border-md" {...rest}>
             <View className="p-3">
                 {children}
             </View>
@@ -21,6 +20,6 @@ export function CardList({ id, description, type, children }: CardProps) {
                 }
                 <Text className="font-body text-left text-md"> {id} - {description}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }

@@ -30,7 +30,14 @@ export default function Clients() {
             }))
 
             setClients(clientUpperCase);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
+    async function handleShowClient(id: number) {
+        try {
+            router.push(`/(signed-routes)/clients/${id}`);
         } catch (error) {
             console.log(error);
         }
@@ -46,7 +53,7 @@ export default function Clients() {
                 <TouchableOpacity onPress={() => { router.back() }} activeOpacity={0.7}>
                     <Feather name="arrow-left" size={34} />
                 </TouchableOpacity>
-                <Text className="font-heading text-center text-3xl">Prestadores</Text>
+                <Text className="font-heading text-center text-3xl">Clientes</Text>
                 <View></View>
             </SafeAreaView>
             <View className="border-b-[1px] border-gray-300 py-3">
@@ -65,6 +72,7 @@ export default function Clients() {
                             <CardList
                                 key={client.id}
                                 id={client.id}
+                                onPress={() => { handleShowClient(client.id) }}
                                 description={client.client_name}
                             >
                                 <Feather name="user" size={28} />
@@ -77,6 +85,7 @@ export default function Clients() {
                     ) : (
                         clients.slice(0, 10).map((client) => (  // Mostra apenas os 10 primeiros
                             <CardList
+                                onPress={() => { }}
                                 key={client.id}
                                 id={client.id}
                                 description={client.client_name}
