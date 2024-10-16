@@ -37,7 +37,7 @@ export default function Clients() {
 
     async function handleShowClient(id: number) {
         try {
-            router.push(`/(signed-routes)/clients/${id}`);
+            router.push(`/(signed-routes)/clients/show-client/${id}`);
         } catch (error) {
             console.log(error);
         }
@@ -85,7 +85,7 @@ export default function Clients() {
                     ) : (
                         clients.slice(0, 10).map((client) => (  // Mostra apenas os 10 primeiros
                             <CardList
-                                onPress={() => { }}
+                                onPress={() => { handleShowClient(client.id) }}
                                 key={client.id}
                                 id={client.id}
                                 description={client.client_name}
