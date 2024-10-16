@@ -37,22 +37,43 @@ export default function ShowClient() {
                     <Text className="font-heading text-center text-3xl">Cliente: {id}</Text>
                     <View></View>
                 </SafeAreaView>
-                <View className="flex-1">
-                    <Text>{clientData.id}</Text>
-                    <Text>{clientData.client_name}</Text>
-                    <Text>{clientData.cpf_cnpj}</Text>
-                    <Text>{clientData.phone}</Text>
+                <View className="flex-1 py-10 space-y-6 items-start justify-center">
+                    <View className="w-full flex flex-row border-b-[1px] border-gray-400">
+                        <Text className="font-heading text-lg">
+                            Código -
+                        </Text>
+                        <Text className="font-body">{clientData.id}</Text>
+                    </View>
+                    <View className="w-full flex border-b-[1px] border-gray-400">
+                        <Text className="font-heading text-lg">
+                            Razão social
+                        </Text>
+                        <Text className="font-body">{clientData.client_name}</Text>
+                    </View>
+                    <View className="w-full flex border-b-[1px] border-gray-400">
+                        <Text className="font-heading text-lg">
+                            CPF/CNPJ
+                        </Text>
+                        <Text className="font-body">{clientData.cpf_cnpj}</Text>
+                    </View>
+                    <View className="w-full flex border-b-[1px] border-gray-400">
+                        <Text className="font-heading text-lg">
+                            Endereço
+                        </Text>
+                        <Text className="font-body">{clientData.address}</Text>
+                    </View>
+                    <View className="w-full flex border-b-[1px] border-gray-400">
+                        <Text className="font-heading text-lg">
+                            Telefone
+                        </Text>
+                        <Text className="font-body">{clientData.phone}</Text>
+                    </View>
                 </View>
             </ScrollView>
             <View className="fixed bottom-0 space-y-3 p-3">
                 <Button>
                     <Button.Text>
                         Novo Pedido
-                    </Button.Text>
-                </Button>
-                <Button>
-                    <Button.Text>
-                        Visita
                     </Button.Text>
                 </Button>
             </View>
