@@ -29,6 +29,7 @@ public class FileUtils {
 
         JSONArray usersArray = new JSONArray();
         JSONArray clientsArray = new JSONArray();
+        JSONArray productsArray = new JSONArray();
 
         for (String line : lines) {
             String[] data = line.split("\\|");
@@ -51,6 +52,15 @@ public class FileUtils {
                 jsonObject.put("phone", data[6]);
 
                 clientsArray.put(jsonObject);
+            } else if (data[1].equals("3")) {
+                JSONObject jsonObject = new JSONObject();
+
+                jsonObject.put("id", data[2]);
+                jsonObject.put("ean", data[3]);
+                jsonObject.put("description", data[4]);
+                jsonObject.put("price", data[5]);
+
+                productsArray.put(jsonObject);
             } else {
                 throw new IOException("Formato de arquivo inválido na linha: " + line);
             }
@@ -59,6 +69,7 @@ public class FileUtils {
         JSONObject result = new JSONObject();
         result.put("users", usersArray);
         result.put("clients", clientsArray);
+        result.put("products", productsArray);
 
         return result.toString(4); // 4 é a indentaão de JSON
     }

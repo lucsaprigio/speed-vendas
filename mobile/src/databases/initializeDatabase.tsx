@@ -29,6 +29,34 @@ export async function initializeDatabase(database: SQLiteDatabase) {
                 cnpj,
                 ip_api TEXT
             );
+            CREATE TABLE IF NOT EXISTS products(
+                id INTEGER PRIMARY KEY,
+                ean TEXT,
+                description TEXT,
+                price REAL,
+                sent TEXT
+            );
+            CREATE TABLE IF NOT EXISTS sales (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                client_id INTEGER, 
+                total REAL,
+                total_descount REAL, 
+                obs TEXT,
+                sent TEXT,
+                FOREIGN KEY (client_id) REFERENCES clients (id)
+            );
+            CREATE TABLE IF NOT EXISTS saleLaunch(
+                id INTEGER PRIMARY KEY,
+                sale_id INTEGER NOT NULL,
+                product_id INTEGER NOT NULL,
+                product_description TEXT,
+                price REAL,
+                descount REAL,
+                quantity INTEGER,
+                total_price INTEGER,
+                FOREIGN KEY (sale_id) REFERENCES sales (id),
+                FOREIGN KEY (product_id) REFERENCES products(id)
+            );
         `);
     } catch (error) {
         throw error
